@@ -144,3 +144,6 @@ ui-apps/node_modules/
 
 # Telemetry configuration (user-specific)
 ~/.n8n-mcp/
+
+# Runtime DB externalized to canonical mcp-data root
+src/database/nodes.db

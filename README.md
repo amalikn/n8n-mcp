@@ -1277,3 +1277,28 @@ Special thanks to the prolific template contributors whose work helps thousands 
   <strong>Built with ❤️ for the n8n community</strong><br>
   <sub>Making AI + n8n workflow creation delightful</sub>
 </div>
+
+## Local Customization Tracking
+- Local machine-specific integration, client wiring, and operational state are tracked under the external data root.
+- Local metadata path: `/Volumes/Data/_ai/_mcp/mcp-data/<name>/meta`
+- Repo-side capability contract is in `docs/local-capability/`.
+- Secrets are never stored in repo docs; only variable names and loading locations are documented.
+
+## Repo Pollution Hygiene
+
+- Runtime database path `src/database/nodes.db` is externalized to canonical storage under:
+  - `/Volumes/Data/_ai/_mcp/mcp-data/n8n-mcp/data/nodes.db`
+- Repo compatibility symlink was retired after controlled startup verification; active startup resolves DB from canonical external path.
+- Mutable runtime artifacts should stay in external data/runtime/cache roots, not repo trees.
+
+## Externalized Repo Artifacts
+
+To reduce repo-local mutable/generated state while preserving runtime paths:
+- `node_modules` is symlinked to canonical cache storage under `/Volumes/Data/_ai/_mcp/mcp-working-cache/n8n-mcp/node_modules-current`
+- `dist` is symlinked to canonical cache storage under `/Volumes/Data/_ai/_mcp/mcp-working-cache/n8n-mcp/dist-current`
+- runtime DB is read from canonical DATA storage under `/Volumes/Data/_ai/_mcp/mcp-data/n8n-mcp/data/nodes.db`
+
+## Local Enhancements Capture (2026-03-13)
+- Captured current local changes, configuration updates, and operational enhancements for GitHub publication.
+- Includes synchronization with sub-repo link updates where applicable.
+- Cross-reference local docs and capability notes added in this repository.
