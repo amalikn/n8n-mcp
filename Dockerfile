@@ -45,11 +45,14 @@ RUN --mount=type=cache,target=/root/.npm \
 # Copy built application
 COPY --from=builder /app/dist ./dist
 
-# Copy pre-built database and required files
-# Cache bust: 2025-07-06-trigger-fix-v3 - includes is_trigger=true for webhook,cron,interval,emailReadImap
-COPY data/nodes.db ./data/
+# Copy data directory and required files
+# Keep build resilient when nodes.db is not pre-bundled in the repo.
+COPY data/ ./data/
 COPY src/database/schema-optimized.sql ./src/database/
 COPY .env.example ./
+
+# Ensure expected DB path exists for runtime bootstrap.
+RUN mkdir -p ./data && [ -f ./data/nodes.db ] || touch ./data/nodes.db
 
 # Copy entrypoint script, config parser, and n8n-mcp command
 COPY docker/docker-entrypoint.sh /usr/local/bin/

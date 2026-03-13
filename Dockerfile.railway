@@ -54,6 +54,7 @@ RUN chmod +x /usr/local/bin/docker-entrypoint.sh
 
 # Create data directory if it doesn't exist and set permissions
 RUN mkdir -p ./data && \
+    [ -f ./data/nodes.db ] || touch ./data/nodes.db && \
     chmod 755 ./data
 
 # Add metadata labels
